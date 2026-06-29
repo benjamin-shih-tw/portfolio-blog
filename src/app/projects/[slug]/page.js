@@ -22,7 +22,7 @@ export default async function Project({ params }) {
           className="project-content"
           dangerouslySetInnerHTML={{ __html: projectData.contentHtml }} 
         />
-        {projectData.link && (
+        {projectData.type === 'project' && projectData.link && (
           <div className="project-link-wrapper">
             <a href={projectData.link} target="_blank" rel="noopener noreferrer" className="external-link-btn">
               Visit Project ↗

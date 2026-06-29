@@ -6,6 +6,27 @@ import Link from 'next/link';
 export default function PortfolioFilter({ localProjects, githubProjects }) {
   const [activeTab, setActiveTab] = useState('blog');
 
+  // 統一的卡片渲染函式
+  const renderCards = (projects, emptyMessage) => {
+    if (projects.length === 0) {
+      return <p>{emptyMessage}</p>;
+    }
+    
+    return projects.map(({ slug, title, date, description }) => (
+      <Link href={`/projects/${slug}`} key={slug} className="card">
+        <div className="card-header">
+          <div className="icon-box blue">📝</div>
+          <div className="tag pink">{date}</div>
+        </div>
+        <h3>{title}</h3>
+        <div className="description">{description}</div>
+        <div className="tag-container">
+          <span className="tag">Read More</span>
+        </div>
+      </Link>
+    ));
+  };
+
   return (
     <div>
       <div className="tabs">
@@ -26,20 +47,7 @@ export default function PortfolioFilter({ localProjects, githubProjects }) {
       {activeTab === 'blog' && (
         <section className="projects-section">
           <div className="grid">
-            {localProjects.map(({ slug, title, date, description }) => (
-              <Link href={`/projects/${slug}`} key={slug} className="card">
-                <div className="card-header">
-                  <div className="icon-box blue">📝</div>
-                  <div className="tag pink">{date}</div>
-                </div>
-                <h3>{title}</h3>
-                <div className="description">{description}</div>
-                <div className="tag-container">
-                  <span className="tag">Read More</span>
-                </div>
-              </Link>
-            ))}
-            {localProjects.length === 0 && <p>No notes found. Add markdown files to src/data/projects!</p>}
+            {renderCards(localProjects, "No notes found. Add markdown files to src/data/projects!")}
           </div>
         </section>
       )}
@@ -47,20 +55,7 @@ export default function PortfolioFilter({ localProjects, githubProjects }) {
       {activeTab === 'projects' && (
         <section className="projects-section">
           <div className="grid">
-            {githubProjects.map((repo) => (
-              <a href={repo.url} target="_blank" rel="noopener noreferrer" key={repo.id} className="card">
-                <div className="card-header">
-                  <div className="icon-box red">⚡</div>
-                  <div className="tag yellow">⭐️ {repo.stars}</div>
-                </div>
-                <h3>{repo.title}</h3>
-                <div className="description">{repo.description}</div>
-                <div className="tag-container">
-                  {repo.language && <span className="tag blue">{repo.language}</span>}
-                  <span className="tag">Source</span>
-                </div>
-              </a>
-            ))}
+            {renderCards(githubProjects, "No projects found. Add markdown files with type: 'project'!")}
           </div>
         </section>
       )}

@@ -1,10 +1,12 @@
 import { getSortedProjectsData } from '@/lib/markdown';
-import { getGithubProjects } from '@/lib/github';
 import PortfolioFilter from '@/components/PortfolioFilter';
 
-export default async function Home() {
-  const localProjects = getSortedProjectsData();
-  const githubProjects = await getGithubProjects('benjamin-shih-tw');
+export default function Home() {
+  const allProjects = getSortedProjectsData();
+  
+  // 分類邏輯：如果 type 是 'project' 就歸類在 GitHub Projects，其他預設為 Blog
+  const localProjects = allProjects.filter(p => p.type !== 'project');
+  const githubProjects = allProjects.filter(p => p.type === 'project');
 
   return (
     <main className="container">

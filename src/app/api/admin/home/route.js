@@ -48,7 +48,7 @@ export async function GET(request) {
 
 export async function PUT(request) {
   if (!isAdminAuthorized(request.headers)) return unauthorizedResponse();
-  if (request.headers.get('origin') !== new URL(request.url).origin ||
+  if (request.headers.get('origin') !== new URL(request.url).protocol + '//' + request.headers.get('host') ||
       request.headers.get('sec-fetch-site') === 'cross-site') {
     return json({ error: '無效的請求來源' }, 403);
   }

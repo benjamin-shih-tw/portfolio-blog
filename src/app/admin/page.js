@@ -38,7 +38,8 @@ export default function AdminPage() {
       });
       const result = await response.json();
       if (!response.ok) throw new Error(result.error || '儲存失敗');
-      setStatus('已提交 GitHub；Vercel 部署完成後首頁就會更新。');
+      setData(previous => ({ ...previous, sha: result.sha }));
+      setStatus(result.unchanged ? '內容沒有變更。' : '已提交 GitHub；Vercel 部署完成後首頁就會更新。');
     } catch (error) { setStatus(error.message); }
     finally { setSaving(false); }
   }

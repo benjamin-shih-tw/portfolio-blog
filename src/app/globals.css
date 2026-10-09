@@ -371,3 +371,10 @@ p {
     padding-left: 40px;
   }
 }
+
+/* Password-protected homepage editor */
+.admin-form { max-width: 680px; display: flex; flex-direction: column; gap: 24px; padding-bottom: 60px; }
+.admin-field { display: flex; flex-direction: column; gap: 8px; font-family: var(--font-inter), sans-serif; }
+.admin-field textarea { width: 100%; border: 1.5px solid var(--ink); border-radius: 8px; padding: 12px; font: inherit; line-height: 1.5; color: var(--ink); background: var(--paper); resize: vertical; }
+.admin-save { border: 0; background: var(--ink); color: #fff; padding: 14px 24px; border-radius: 8px; cursor: pointer; font-family: var(--font-inter), sans-serif; font-weight: 600; }
+.admin-save:disabled { opacity: .6; cursor: wait; }
